@@ -3,6 +3,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using AmortizationCalculator.Models.ViewModels;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 public class AmortizationPdfDocument : IDocument
 {
@@ -72,6 +73,9 @@ public class AmortizationPdfDocument : IDocument
                         table.Cell().PaddingTop(3).Text("Assurance active");
                         table.Cell().PaddingTop(3).Text(_model.InputParameters.HasInsurance ? "Oui" : "Non");
 
+                        table.Cell().PaddingTop(10);
+                        table.Cell().PaddingTop(10);
+
                         // Total global
                         table.Cell().PaddingTop(3).Text("Total Intérêts");
                         table.Cell().PaddingTop(3).Text(_model.TotalInterestCost.ToString("C"));
@@ -83,7 +87,9 @@ public class AmortizationPdfDocument : IDocument
                         table.Cell().PaddingTop(3).Text(_model.TotalCost.ToString("C"));
                     });
 
-                    col.Item().Padding(10).Background(Colors.Grey.Lighten4).Text(txt =>
+                    col.Item().PaddingBottom(10);
+
+                    col.Item().PaddingTop(5).Background(Colors.Grey.Lighten4).Text(txt =>
                     {
                         txt.Span("⚠️ Attention : ");
                         txt.Span("Ce document est une simulation générée automatiquement en fonction des données saisies. " +
@@ -95,8 +101,10 @@ public class AmortizationPdfDocument : IDocument
                 // Boucle par année
                 foreach (var yearGroup in groupedByYear)
                 {
+                    col.Item().PaddingBottom(15);
+
                     col.Item()
-                    .PaddingTop(15)
+                    .PaddingTop(18)
                     .Text($"Échéances - Année {yearGroup.Key}")
                     .SemiBold()
                     .FontSize(14);

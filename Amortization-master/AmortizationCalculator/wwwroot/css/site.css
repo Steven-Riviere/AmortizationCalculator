@@ -1,22 +1,256 @@
+/* ------------------ GENERAL ------------------ */
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    background-color: #f3f4f6;
+    color: #212529;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.text-danger {
+    font-size: 14px;
+}
+/* ------------------ CONTAINER ------------------ */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    box-sizing: border-box;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card {
+    width: 75%;
+    max-width: 1200px;
+    margin: 5px auto;
+}
+
+    /* ------------------ FORM CARD ------------------ */
+    .card.form-card {
+        width: 60%;
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background-color: #fff;
+        margin: 5px auto;
+    }
+
+        /* Card header */
+        .card.form-card .card-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+.card-header small {
+    display: block;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* ------------------ FORM FIELDS ------------------ */
+.form fieldset {
+    border: none;
+    padding: 0;
+}
+
+.form .mb-3 {
+    margin-bottom: 1rem;
+}
+
+.form input:not([type="checkbox"]),
+.form select,
+.form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+    .form input:focus,
+    .form select:focus,
+    .form textarea:focus {
+        outline: none;
+        border-color: #258cfb;
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+
+/* Checkbox */
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+    .form-check label {
+        margin-left: 0.5rem;
+    }
+
+/* Button */
+.form button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+
+.btn-primary {
+    background-color: #3a8cff;
+    color: white;
+}
+
+    .btn-primary:hover {
+        background-color: #16324f;
+    }
+
+/* ------------------ TABLES ------------------ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+th,
+td {
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+
+th {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Modal tables */
+.modal .table td,
+.modal .table th {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.table-card {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+    .table-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+
+/* Year pills */
+.year-pills {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: .25rem;
+    gap: .5rem;
+}
+
+    .year-pills::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .year-pills::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 6px;
+    }
+
+.modal-body {
+    overflow-x: auto;
+}
+
+    .modal-body .card {
+        border: none;
+    }
+
+.modal-dialog.modal-xl {
+    max-width: 100%;
+    margin: 1.5rem auto;
+}
+
+.modal .table {
+    width: 100%;
+    table-layout: auto;
+}
+
+th span.full {
+    display: inline;
+}
+
+th span.short {
+    display: none;
+}
+
+.bottom {
+    padding: 0 15px;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #dee2e6;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: #fff;
+}
+
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (min-width: 1024px) {
+    .modal-content {
+        width: 80%;
+        margin: 80px auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    html {
+        font-size: 16px;
+    }
+
+    th span.full {
+        display: none;
+    }
+
+    th span.short {
+        display: inline;
+    }
+
+    .modal-dialog.modal-xl {
+        max-width: 90%;
+        margin: 1.5rem auto;
+    }
+
+    .modal .table {
+        width: 100%;
+        table-layout: auto;
+        font-size: 0.8rem;
+    }
+
+    .modal-content {
+        margin: 80px auto
+    }
+
+    .modal-body .card {
+        width: 100%;
+    }
+
+    .card-body {
+        font-size: small;
+    }
 }

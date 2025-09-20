@@ -1,4 +1,4 @@
-namespace AmortizationCalculator.Models
+namespace AmortizationCalculator.Models.ViewModels
 {
     public class ErrorViewModel
     {

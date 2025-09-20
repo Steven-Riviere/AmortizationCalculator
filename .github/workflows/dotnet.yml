@@ -19,13 +19,13 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-        
+
     - name: Restore dependencies
-      run: dotnet restore Amortization-master/AmortizationCalculator.sln
+      run: dotnet restore Amortization-master/Amortization-master.sln
 
     - name: Build
-      run: dotnet build Amortization-master/AmortizationCalculator.sln --no-restore
+      run: dotnet build Amortization-master/Amortization-master.sln --no-restore
 
     - name: Test
-      run: dotnet test Amortization-master/AmortizationCalculator.sln --no-build --verbosity normal
+      run: dotnet test Amortization-master/Amortization-master.sln --no-build --verbosity normal
 

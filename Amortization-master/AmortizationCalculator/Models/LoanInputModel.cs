@@ -23,7 +23,7 @@ namespace AmortizationCalculator.Models
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
 
         [Range(0, 60)]
         [Display(Name = "Différé d'amortissement (en mois)")]

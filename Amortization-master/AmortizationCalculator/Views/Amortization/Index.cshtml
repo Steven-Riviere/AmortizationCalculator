@@ -8,206 +8,24 @@
 
     @if (Model.Entries == null || !Model.Entries.Any())
     {
-        <!-- CARD : Formulaire -->
-        <div class="card shadow-sm mb-4 form-card">
-            <div class="card-header">
-                <h1 class="h4 mb-0">Tableau d'amortissement</h1>
-                <small class="text-muted">Veuillez remplir les renseignements *</small>
-            </div>
-            <div class="card-body">
-                <section class="form">
-                    <form method="post" asp-action="Index" novalidate>
-                        @Html.AntiForgeryToken()
-                        <fieldset>
-                            <legend class="h6">Informations du prêt</legend>
-
-                            <div class="mb-3">
-                                <label class="form-label">Montant du prêt</label>
-                                <input asp-for="InputParameters.LoanAmount" type="number" step="0.01" class="form-control" />
-                                <span class="text-danger" asp-validation-for="InputParameters.LoanAmount"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Taux d'intérêt (%)</label>
-                                <input asp-for="InputParameters.InterestRate" type="number" step="0.01" class="form-control" />
-                                <span class="text-danger" asp-validation-for="InputParameters.InterestRate"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="insuranceRate">Taux assurance (%)</label>
-                                <input asp-for="InputParameters.InsuranceRate" id="insuranceRate" type="number" step="0.01" class="form-control" />
-                                <span class="text-danger" asp-validation-for="InputParameters.InsuranceRate"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Durée (années)</label>
-                                <input asp-for="InputParameters.DurationInYears" type="number" class="form-control" />
-                                <span class="text-danger" asp-validation-for="InputParameters.DurationInYears"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Date de début</label>
-                                <input asp-for="InputParameters.StartDate" type="date" class="form-control" />
-                                <span class="text-danger" asp-validation-for="InputParameters.StartDate"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Différé du capital remboursé (mois)</label>
-                                <input asp-for="InputParameters.DeferredMonths" type="number" min="0" max="60" class="form-control" />
-                                <span class="text-danger" asp-validation-for="InputParameters.DeferredMonths"></span>
-                            </div>
-
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" asp-for="InputParameters.HasInsurance" type="checkbox" id="hasInsurance" />
-                                <label class="form-check-label" for="hasInsurance">Assurance active</label>
-                            </div>
-
-                                <button type="submit" class="btn btn-primary btn-hover">Calculer</button>
-                        </fieldset>
-                    </form>
-                </section>
-            </div>
-        </div>
+        @await Html.PartialAsync("_Form", Model)
     }
 
     @if (Model.Entries != null && Model.Entries.Any())
     {
-            // Grouper par année une seule fois, réutilisable (Last(), foreach,…)
-            var groupedByYear = Model.Entries
-                .GroupBy(e => e.PaymentDate.Year)
-                .OrderBy(g => g.Key)
-                .ToList();
+        // Grouper par année une seule fois, réutilisable (Last(), foreach,…)
+        var groupedByYear = Model.Entries
+            .GroupBy(e => e.PaymentDate.Year)
+            .OrderBy(g => g.Key)
+            .ToList();
 
-        <!-- CARD : Détails du prêt -->
-        @if (Model.InputParameters != null)
-        {
-            <div class="card shadow-sm mb-4">
-                <div class="card-header">
-                    <h3 class="h5 mb-0">Détails du prêt</h3>
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-sm table-striped mb-0">
-                        <tbody>
-                            <tr><th scope="row">Montant du prêt</th><td>@Model.InputParameters.LoanAmount.ToString("C")</td></tr>
-                            <tr><th scope="row">Taux d'intérêt</th><td>@Model.InputParameters.InterestRate.ToString("F2") %</td></tr>
-                            <tr><th scope="row">Taux d'assurance</th><td>@Model.InputParameters.InsuranceRate.ToString("F2") %</td></tr>
-                            <tr><th scope="row">Durée</th><td>@Model.InputParameters.DurationInYears années</td></tr>
-                            <tr><th scope="row">Date début</th><td>@Model.InputParameters.StartDate.ToString("dd-MM-yyyy")</td></tr>
-                            <tr><th scope="row">Différé du capital remboursé</th><td>@Model.InputParameters.DeferredMonths mois</td></tr>
-                            <tr><th scope="row">Assurance active</th><td>@(Model.InputParameters.HasInsurance ? "Oui" : "Non")</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer text-end">
-                    <a asp-action="Index" class="btn btn-outline-secondary btn-hover">
-                        <i class="fa-solid fa-arrow-left me-1"></i>Refaire une simulation
-                    </a>
-                </div>
-            </div>
-        }
+        @await Html.PartialAsync("_DetailsCard", Model)
 
-        <!-- CARD : Années disponibles -->
-        <div class="card shadow-sm mb-4 year-index-card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="h5 mb-0">Années disponibles</h3>
-                <small class="text-muted">
-                    @groupedByYear.First().Key – @groupedByYear.Last().Key
-                </small>
-            </div>
+        @await Html.PartialAsync("_YearCard", groupedByYear)
 
-            <div class="card-body">
-                <div class="form-text mt-2 mb-2">Cliquez sur une année pour voir le détail.</div>
-                <div class="d-flex flex-wrap gap-2 year-pills">
-                    @foreach (var yg in groupedByYear)
-                    {
-                        <button type="button"
-                                class="btn btn-outline-primary btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#yearModal_@yg.Key">
-                            @yg.Key
-                        </button>
-                    }
-                </div>
+        @await Html.PartialAsync("_BoardLoan", groupedByYear)
 
-                <div class="text-end">
-                    <a asp-controller="Download" asp-action="DownloadPdf" class="btn btn-success">
-                        <i class="fa-solid fa-file-pdf me-1"></i>Télécharger PDF
-                    </a>
-                </div>
-
-                <div style="margin-top:15px; padding:0 10px; background-color:#f5f5f5; border-left:4px solid #ff9800;">
-                    <strong>⚠️ Attention :</strong>
-                    Ce document est une simulation générée automatiquement en fonction des données saisies.
-                    Il est fourni à titre purement informatif et ne constitue pas un document contractuel.
-                    Pour tout calcul officiel et décision financière, veuillez consulter votre banque ou un courtier.
-                </div>
-            </div>
-        </div>
-
-        <!-- MODALES : une par année (tableaux dans des cards avec hover) -->
-        @foreach (var yearGroup in groupedByYear)
-        {
-            var isLastYear = yearGroup.Key == groupedByYear.Last().Key;
-            <div class="modal fade" id="yearModal_@yearGroup.Key" tabindex="-1" aria-labelledby="yearModalLabel_@yearGroup.Key" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 id="yearModalLabel_@yearGroup.Key" class="modal-title">Année @yearGroup.Key</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="card table-card shadow-sm">
-                                <div class="card-body p-0">
-                                    <table class="table table-sm mb-0 align-middle">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Mois</th>
-                                                <th><span class="full">Date paiement</span><span class="short">Date</span></th>
-                                                <th><span class="full">Paiement mensuel</span><span class="short">Paiem.</span></th>
-                                                <th><span class="full">Intérêts</span><span class="short">Int.</span></th>
-                                                <th><span class="full">Assurance</span><span class="short">Ass.</span></th>
-                                                <th><span class="full">Capital remboursé</span><span class="short">Capital rbt</span></th>
-                                                <th><span class="full">Capital restant dû</span><span class="short">Restant</span></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var entry in yearGroup)
-                                            {
-                                                <tr>
-                                                    <td>@entry.Month</td>
-                                                    <td>@entry.PaymentDate.ToString("dd-MM-yyyy")</td>
-                                                    <td>@entry.MonthlyPayment.ToString("C")</td>
-                                                    <td>@entry.Interest.ToString("C")</td>
-                                                    <td>@entry.Insurance.ToString("C")</td>
-                                                    <td>@entry.PrincipalPaid.ToString("C")</td>
-                                                    <td>@entry.RemainingPrincipal.ToString("C")</td>
-                                                </tr>
-                                            }
-                                            <tr class="fw-bold">
-                                                <td colspan="2" class="text-end">Total année @yearGroup.Key</td>
-                                                <td>@yearGroup.Sum(e => e.MonthlyPayment).ToString("C") = </td>
-                                                <td>@yearGroup.Sum(e => e.Interest).ToString("C")</td>
-                                                <td>@yearGroup.Sum(e => e.Insurance).ToString("C")</td>
-                                                <td>@yearGroup.Sum(e => e.PrincipalPaid).ToString("C")</td>
-                                            </tr>
-
-                                            @if (isLastYear)
-                                            {
-                                                <tr class="fw-bold table-secondary">
-                                                    <td colspan="3">Total Intérêts: @Model.TotalInterestCost.ToString("C")</td>
-                                                    <td colspan="2">Total Assurance: @Model.TotalInsuranceCost.ToString("C")</td>
-                                                    <td colspan="2">Coût total: @Model.TotalCost.ToString("C")</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div> <!-- /card -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+        
 
         <!-- CARD : Récapitulatif global -->
         <div class="card shadow-sm mb-4 recap-card">

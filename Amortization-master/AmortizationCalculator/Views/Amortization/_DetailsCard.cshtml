@@ -1,0 +1,29 @@
+﻿@model AmortizationCalculator.Models.ViewModels.AmortizationResultViewModel
+
+<!-- CARD : Détails du prêt -->
+@if (Model.InputParameters != null)
+{
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h3 class="h5 mb-0">Détails du prêt</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-sm table-striped mb-0">
+                <tbody>
+                    <tr><th scope="row">Montant du prêt</th><td>@Model.InputParameters.LoanAmount.ToString("C")</td></tr>
+                    <tr><th scope="row">Taux d'intérêt</th><td>@Model.InputParameters.InterestRate.ToString("F2") %</td></tr>
+                    <tr><th scope="row">Taux d'assurance</th><td>@Model.InputParameters.InsuranceRate.ToString("F2") %</td></tr>
+                    <tr><th scope="row">Durée</th><td>@Model.InputParameters.DurationInYears années</td></tr>
+                    <tr><th scope="row">Date début</th><td>@Model.InputParameters.StartDate.ToString("dd-MM-yyyy")</td></tr>
+                    <tr><th scope="row">Différé du capital remboursé</th><td>@Model.InputParameters.DeferredMonths mois</td></tr>
+                    <tr><th scope="row">Assurance active</th><td>@(Model.InputParameters.HasInsurance ? "Oui" : "Non")</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end">
+            <a asp-action="Index" class="btn btn-outline-secondary btn-hover">
+                <i class="fa-solid fa-arrow-left me-1"></i>Refaire une simulation
+            </a>
+        </div>
+    </div>
+}

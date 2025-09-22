@@ -1,0 +1,67 @@
+﻿@model List<IGrouping<int, AmortizationCalculator.Models.AmortizationEntryModel>>
+
+
+<!-- MODALES : une par année (tableaux dans des cards avec hover) -->
+@foreach (var yearGroup in Model)
+{
+    var isLastYear = yearGroup.Key == Model.Last().Key;
+    <div class="modal fade" id="yearModal_@yearGroup.Key" tabindex="-1" aria-labelledby="yearModalLabel_@yearGroup.Key" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="yearModalLabel_@yearGroup.Key" class="modal-title">Année @yearGroup.Key</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card table-card shadow-sm">
+                        <div class="card-body p-0">
+                            <table class="table table-sm mb-0 align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mois</th>
+                                        <th><span class="full">Date paiement</span><span class="short">Date</span></th>
+                                        <th><span class="full">Paiement mensuel</span><span class="short">Paiem.</span></th>
+                                        <th><span class="full">Intérêts</span><span class="short">Int.</span></th>
+                                        <th><span class="full">Assurance</span><span class="short">Ass.</span></th>
+                                        <th><span class="full">Capital remboursé</span><span class="short">Capital rbt</span></th>
+                                        <th><span class="full">Capital restant dû</span><span class="short">Restant</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var entry in yearGroup)
+                                    {
+                                        <tr>
+                                            <td>@entry.Month</td>
+                                            <td>@entry.PaymentDate.ToString("dd-MM-yyyy")</td>
+                                            <td>@entry.MonthlyPayment.ToString("C")</td>
+                                            <td>@entry.Interest.ToString("C")</td>
+                                            <td>@entry.Insurance.ToString("C")</td>
+                                            <td>@entry.PrincipalPaid.ToString("C")</td>
+                                            <td>@entry.RemainingPrincipal.ToString("C")</td>
+                                        </tr>
+                                    }
+                                    <tr class="fw-bold">
+                                        <td colspan="2" class="text-end">Total année @yearGroup.Key</td>
+                                        <td>@yearGroup.Sum(e => e.MonthlyPayment).ToString("C") = </td>
+                                        <td>@yearGroup.Sum(e => e.Interest).ToString("C")</td>
+                                        <td>@yearGroup.Sum(e => e.Insurance).ToString("C")</td>
+                                        <td>@yearGroup.Sum(e => e.PrincipalPaid).ToString("C")</td>
+                                    </tr>
+
+                                    @if (isLastYear)
+                                    {
+                                        <tr class="fw-bold table-secondary">
+                                            <td colspan="3">Total Intérêts: @ViewData["TotalInterestCost"]</td>
+                                            <td colspan="2">Total Assurance: @ViewData["TotalInsuranceCost"]</td>
+                                            <td colspan="2">Coût total: @ViewData["TotalCost"]</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- /card -->
+                </div>
+            </div>
+        </div>
+    </div>
+}

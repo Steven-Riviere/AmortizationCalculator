@@ -104,7 +104,7 @@ public class AmortizationPdfDocument : IDocument
                     col.Item().PaddingBottom(15);
 
                     col.Item()
-                    .PaddingTop(18)
+                    .PaddingTop(10)
                     .Text($"Échéances - Année {yearGroup.Key}")
                     .SemiBold()
                     .FontSize(14);

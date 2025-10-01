@@ -10,19 +10,18 @@
     <div class="card-body">
         <section class="form">
             <form method="post" asp-action="Index" novalidate>
-                @Html.AntiForgeryToken()
                 <fieldset>
                     <legend class="h6">Informations du prêt</legend>
 
                     <div class="mb-3">
-                        <label class="form-label">Montant du prêt</label>
-                        <input asp-for="InputParameters.LoanAmount" type="number" step="0.01" class="form-control" />
+                        <label class="form-label" for="loanAmount">Montant du prêt</label>
+                        <input asp-for="InputParameters.LoanAmount" type="number" step="0.01" class="form-control" id="loanAmount" />
                         <span class="text-danger" asp-validation-for="InputParameters.LoanAmount"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Taux d'intérêt (%)</label>
-                        <input asp-for="InputParameters.InterestRate" type="number" step="0.01" class="form-control" />
+                        <label class="form-label" for="interestRate">Taux d'intérêt (%)</label>
+                        <input asp-for="InputParameters.InterestRate" type="number" step="0.01" class="form-control" id="interestRate" />
                         <span class="text-danger" asp-validation-for="InputParameters.InterestRate"></span>
                     </div>
 
@@ -33,20 +32,20 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Durée (années)</label>
-                        <input asp-for="InputParameters.DurationInYears" type="number" class="form-control" />
+                        <label class="form-label" for="durationInYears">Durée (années)</label>
+                        <input asp-for="InputParameters.DurationInYears" type="number" class="form-control" id="durationInYears"/>
                         <span class="text-danger" asp-validation-for="InputParameters.DurationInYears"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Date de début</label>
-                        <input asp-for="InputParameters.StartDate" type="date" class="form-control" />
+                        <label class="form-label" for="startDate">Date de début</label>
+                        <input asp-for="InputParameters.StartDate" type="date" class="form-control" id="startDate" />
                         <span class="text-danger" asp-validation-for="InputParameters.StartDate"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Différé du capital remboursé (mois)</label>
-                        <input asp-for="InputParameters.DeferredMonths" type="number" min="0" max="60" class="form-control" />
+                        <label class="form-label" for="deferredMonths">Différé du capital remboursé (mois)</label>
+                        <input asp-for="InputParameters.DeferredMonths" type="number" min="0" max="60" class="form-control" id="deferredMonths" />
                         <span class="text-danger" asp-validation-for="InputParameters.DeferredMonths"></span>
                     </div>
 

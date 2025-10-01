@@ -16,7 +16,6 @@ namespace AmortizationCalculator.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Index(AmortizationResultViewModel model)
         {
             var input = model.InputParameters;

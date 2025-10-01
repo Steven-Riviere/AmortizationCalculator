@@ -23,13 +23,13 @@ main {
     font-size: 14px;
 }
 /* ------------------ CONTAINER ------------------ */
-.container {
+.container .container {
     display: flex;
     justify-content: center;
     align-items: stretch;
     box-sizing: border-box;
     flex-direction: column;
-    height: 100%;
+    height: auto;
 }
 
 .card {
@@ -38,21 +38,21 @@ main {
     margin: 5px auto;
 }
 
-    /* ------------------ FORM CARD ------------------ */
-    .card.form-card {
-        width: 60%;
-        max-width: 100%;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        background-color: #fff;
-        margin: 5px auto;
-    }
+/* ------------------ FORM CARD ------------------ */
+.card.form-card {
+    width: 60%;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #fff;
+    margin: 5px auto;
+}
 
-        /* Card header */
-        .card.form-card .card-header h1 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
+/* Card header */
+.card.form-card .card-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
 
 .card-header small {
     display: block;
@@ -80,13 +80,13 @@ main {
     border-radius: 4px;
 }
 
-    .form input:focus,
-    .form select:focus,
-    .form textarea:focus {
-        outline: none;
-        border-color: #258cfb;
-        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-    }
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+    outline: none;
+    border-color: #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
 
 /* Checkbox */
 .form-check {
@@ -94,9 +94,9 @@ main {
     align-items: center;
 }
 
-    .form-check label {
-        margin-left: 0.5rem;
-    }
+.form-check label {
+    margin-left: 0.5rem;
+}
 
 /* Button */
 .form button {
@@ -112,9 +112,9 @@ main {
     color: white;
 }
 
-    .btn-primary:hover {
-        background-color: #16324f;
-    }
+.btn-primary:hover {
+    background-color: #16324f;
+}
 
 /* ------------------ TABLES ------------------ */
 table {
@@ -151,10 +151,10 @@ th {
     transition: transform .15s ease, box-shadow .15s ease;
 }
 
-    .table-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
-    }
+.table-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
 
 /* Year pills */
 .year-pills {
@@ -164,22 +164,22 @@ th {
     gap: .5rem;
 }
 
-    .year-pills::-webkit-scrollbar {
-        height: 6px;
-    }
+.year-pills::-webkit-scrollbar {
+    height: 6px;
+}
 
-    .year-pills::-webkit-scrollbar-thumb {
-        background: #ccc;
-        border-radius: 6px;
-    }
+.year-pills::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 6px;
+}
 
 .modal-body {
     overflow-x: auto;
 }
 
-    .modal-body .card {
-        border: none;
-    }
+.modal-body .card {
+    border: none;
+}
 
 .modal-dialog.modal-xl {
     max-width: 100%;
@@ -195,7 +195,7 @@ th span.full {
     display: inline;
 }
 
-th span.short {
+th span.short, span.shorty {
     display: none;
 }
 
@@ -207,6 +207,7 @@ th span.short {
     white-space: nowrap;
     line-height: 60px;
     background-color: #fff;
+    margin-top: 30px;
 }
 
 
@@ -216,6 +217,9 @@ th span.short {
         width: 80%;
         margin: 80px auto;
     }
+    .card.table-card.shadow-sm {
+        width: 700px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -223,7 +227,7 @@ th span.short {
         font-size: 16px;
     }
 
-    th span.full {
+    th span.full, span.shorty {
         display: none;
     }
 
@@ -252,5 +256,56 @@ th span.short {
 
     .card-body {
         font-size: small;
+    }
+}
+
+@media (max-width: 425px) {
+
+    table {
+        font-size: 12px;
+    }
+
+    h3, a.btn, .border, .alert {
+        font-size: small;
+    }
+
+    .modal .table thead {
+        display: none;
+    }
+
+    .modal .table tbody tr {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: 0.5rem;
+        background-color: #fff;
+    }
+
+    .modal .table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+        flex-direction: row-reverse;
+    }
+
+    .modal .table tbody td span.shorty {
+        display: inline;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+
+    .modal .table tbody td span.full {
+        display: none;
+    }
+
+    .modal .table tbody tr.fw-bold td,
+    .modal .table tbody tr.table-secondary td {
+        flex-direction: column;
+        text-align: right;
+        font-size: 0.85rem;
     }
 }

@@ -1,6 +1,6 @@
 # Étape 1 : build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+WORKDIR /src
 
 # Copier le fichier csproj et restaurer les dépendances
 COPY *.csproj ./ 

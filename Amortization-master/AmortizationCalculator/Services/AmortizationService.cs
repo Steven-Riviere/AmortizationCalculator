@@ -35,19 +35,20 @@ namespace AmortizationCalculator.Services
 
             decimal monthlyInterestRate = (decimal)(input.InterestRate / 100) / 12;
             decimal monthlyInsuranceRate = (decimal)(input.InsuranceRate / 100) / 12;
-            int totalMonths = input.DurationInYears * 12;
+            int totalMonths = (input.DurationInYears * 12)+ input.DeferredMonths;
+            int repaymentMonths = input.DurationInYears * 12;
             decimal remainingPrincipal = input.LoanAmount;
 
             //Calcul hors différé
             decimal monthlyPayment = 0;
             if (monthlyInterestRate > 0)
             {
-                monthlyPayment = input.LoanAmount * monthlyInterestRate / (1 - (decimal)Math.Pow(1 + (double)monthlyInterestRate, -totalMonths));
+                monthlyPayment = input.LoanAmount * monthlyInterestRate / (1 - (decimal)Math.Pow(1 + (double)monthlyInterestRate, -repaymentMonths));
             }
             else
             {
                 // Si taux 0%
-                monthlyPayment = input.LoanAmount / totalMonths;
+                monthlyPayment = input.LoanAmount / repaymentMonths;
             }
 
             int currentMonth = 1;

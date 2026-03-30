@@ -7,6 +7,7 @@ Elle permet à l’utilisateur de saisir les données de son prêt (montant, tau
 Un **message d’alerte** informe l’utilisateur qu’il s’agit d’une simulation, et que pour un montant contractuel il est préférable de contacter un professionnel du secteur bancaire.
 
 Ce projet a été déployé avec Azure puis sur Render
+https://pretimmosimulation.onrender.com/ 
 
 ## ⚙️ Fonctionnalités
 - Formulaires dynamiques : saisie des données utilisateur.

@@ -5,8 +5,8 @@ name: .NET
 
 on:
   push:
-    branches: 
-    - pipeline
+    branches:
+      - develop
 
 jobs:
   build-test-package:
@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
 
     - name: Restore dependencies
       run: dotnet restore Amortization-master/Amortization-master.sln
@@ -26,6 +26,9 @@ jobs:
     - name: Build
       run: dotnet build Amortization-master/Amortization-master.sln --no-restore
 
-    - name: Test
+    - name: Install Playwright Browsers
+      run: pwsh PlaywrightTests/bin/Debug/net9.0/playwright.ps1 install
+
+    - name: Run Tests
       run: dotnet test Amortization-master/Amortization-master.sln --no-build --verbosity normal
 

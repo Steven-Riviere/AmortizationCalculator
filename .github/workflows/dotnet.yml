@@ -20,18 +20,14 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    - name: Restore dependencies
+    - name: Restore
       run: dotnet restore Amortization-master/Amortization-master.sln
 
-    - name: Build
+    - name: Build solution
       run: dotnet build Amortization-master/Amortization-master.sln --no-restore
 
-    - name: Build Tests
-      run: dotnet build PlaywrightTests/PlaywrightTests.csproj
-
     - name: Install Playwright Browsers
-      run: pwsh PlaywrightTests/bin/Debug/net9.0/playwright.ps1 install
+      run: pwsh Amortization-master/PlaywrightTests/bin/Debug/net9.0/playwright.ps1 install
 
-    - name: Run Tests
+    - name: Test
       run: dotnet test Amortization-master/Amortization-master.sln --no-build --verbosity normal
-

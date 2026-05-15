@@ -26,6 +26,11 @@ jobs:
     - name: Build solution
       run: dotnet build Amortization-master/Amortization-master.sln --no-restore
 
+    - name: Start ASP.NET app
+      run: |
+        Start-Process dotnet "run --project Amortization-master/AmortizationCalculator/AmortizationCalculator.csproj"
+        Start-Sleep -Seconds 180
+
     - name: Install Playwright Browsers
       run: pwsh Amortization-master/PlaywrightTests/bin/Debug/net9.0/playwright.ps1 install
 

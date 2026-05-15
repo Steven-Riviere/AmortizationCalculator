@@ -26,8 +26,11 @@ jobs:
     - name: Build
       run: dotnet build Amortization-master/Amortization-master.sln --no-restore
 
+    - name: Install Playwright CLI
+      run: dotnet tool install --global Microsoft.Playwright.CLI
+
     - name: Install Playwright Browsers
-      run: pwsh bin/Debug/net9.0/playwright.ps1 install
+      run: playwright install
 
     - name: Run Tests
       run: dotnet test Amortization-master/Amortization-master.sln --no-build --verbosity normal
